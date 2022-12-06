@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name = "app_name">Empowero</string>
+    <string name="facebook_app_id">542753167391774</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">45aeb0152f84f8958479912ee9cd55fc</string>
+</resources>

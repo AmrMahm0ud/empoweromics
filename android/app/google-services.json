@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "857400138933",
+    "project_id": "empower-75ec9",
+    "storage_bucket": "empower-75ec9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857400138933:android:85439b3aa3b9803e7db2fc",
+        "android_client_info": {
+          "package_name": "com.example.empowero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857400138933-s576eag9a2ga45b24l0m7vtor9fde8fh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.empowero",
+            "certificate_hash": "2a4a586e1e8772e15dd94a1591ad43e1b23d2397"
+          }
+        },
+        {
+          "client_id": "857400138933-c93r5id238kpk6gjnn5vqhtnulctcsr4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABwP8sn4fZHdbnN59jdEmImt2UBmlEquU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857400138933-c93r5id238kpk6gjnn5vqhtnulctcsr4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "857400138933-uikpfr2n2khiedal6pamelcthk664485.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.empowero"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

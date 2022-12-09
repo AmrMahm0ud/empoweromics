@@ -11,13 +11,11 @@ class AuthenticationRepositoryImplementation
 
   @override
   Future<User> authenticateWithFacebook() async {
-    User user = await authenticationServices.authenticateWithFacebook();
-    return user;
+    return await authenticationServices.authenticateWithFacebook();
   }
 
   @override
   Future<User> authenticateWithGoogle() async {
-    User user = await authenticationServices.authenticateWithGoogle();
-    return user;
+    return await authenticationServices.authenticateWithGoogle();
   }
 }

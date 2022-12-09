@@ -6,12 +6,14 @@ class RadiobuttonSelectionWidget extends StatelessWidget {
   final RadioButtonValue? selectedValue;
   final List<RadioButtonValue> values;
   final String title;
+  final Function(RadioButtonValue) onChanged;
 
   const RadiobuttonSelectionWidget(
       {Key? key,
       required this.selectedValue,
       required this.values,
-      required this.title})
+      required this.title,
+      required this.onChanged})
       : super(key: key);
 
   @override
@@ -36,6 +38,9 @@ class RadiobuttonSelectionWidget extends StatelessWidget {
                     radioButtonValue: element,
                     title: element.label,
                     selectedValue: selectedValue,
+                    onChange: (value) {
+                      onChanged(value);
+                    },
                   ))
               .toList()),
     );

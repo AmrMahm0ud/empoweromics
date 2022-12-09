@@ -5,12 +5,14 @@ class CustomRadioButton extends StatelessWidget {
   final String title;
   final RadioButtonValue? selectedValue;
   final RadioButtonValue? radioButtonValue;
+  final Function(RadioButtonValue) onChange;
 
   const CustomRadioButton(
       {Key? key,
       required this.title,
       required this.selectedValue,
-      required this.radioButtonValue})
+      required this.radioButtonValue,
+      required this.onChange})
       : super(key: key);
 
   @override
@@ -28,11 +30,9 @@ class CustomRadioButton extends StatelessWidget {
         value: radioButtonValue!,
         groupValue: selectedValue,
         onChanged: (value) {
-          onChanged();
+          onChange(value!);
         },
       ),
     );
   }
-
-  void onChanged() {}
 }

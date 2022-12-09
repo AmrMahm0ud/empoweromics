@@ -1,4 +1,6 @@
+import 'package:empowero/src/domain/entities/personal_information/personal_information.dart';
 import 'package:empowero/src/domain/entities/personal_information/personal_information_validation_text.dart';
+import 'package:empowero/src/domain/usecase/personal_information/save_personal_information_into_local_database_use_case.dart';
 import 'package:empowero/src/domain/usecase/personal_information/validate_company_name_use_case.dart';
 import 'package:empowero/src/domain/usecase/personal_information/validate_email_use_case.dart';
 import 'package:empowero/src/domain/usecase/personal_information/validate_governorate_use_case.dart';
@@ -15,13 +17,16 @@ class PersonalInformationBloc
   final ValidateMobileNumberUseCase validateMobileNumberUseCase;
   final ValidateCompanyNameUseCase validateCompanyNameUseCase;
   final ValidateEmailUseCase validateEmailUseCase;
+  final SavePersonalInformationIntoDataBaseUseCase
+      savePersonalInformationIntoDataBaseUseCase;
 
   PersonalInformationBloc(
       {required this.validateNameUseCase,
       required this.validateGovernorateUseCase,
       required this.validateMobileNumberUseCase,
       required this.validateCompanyNameUseCase,
-      required this.validateEmailUseCase})
+      required this.validateEmailUseCase,
+      required this.savePersonalInformationIntoDataBaseUseCase})
       : super(InitialPersonalInformationState()) {
     on<StorePersonalInformationInDataBaseEvent>(
         _onStorePersonalInformationInDataBaseEvent);
@@ -32,11 +37,9 @@ class PersonalInformationBloc
     on<SelectBackingObligationEvent>(_onSelectBackingObligationEvent);
     on<CheckCompanyNameValidationEvent>(_onCheckCompanyNameValidationEvent);
     on<CheckEmailValidationEvent>(_onCheckEmailValidationEvent);
+    on<SendPersonalInformationButtonPressedEvent>(
+        _onSendPersonalInformationButtonPressedEvent);
   }
-
-  Future<void> _onStorePersonalInformationInDataBaseEvent(
-      StorePersonalInformationInDataBaseEvent event,
-      Emitter<PersonalInformationState> emit) async {}
 
   PersonalInformationValidationText personalInformationValidationText =
       PersonalInformationValidationText();
@@ -108,5 +111,44 @@ class PersonalInformationBloc
     }
     emit(PersonalInformationValidationState(
         personalInformationValidationText: personalInformationValidationText));
+  }
+
+  void _onSendPersonalInformationButtonPressedEvent(
+      SendPersonalInformationButtonPressedEvent event,
+      Emitter<PersonalInformationState> emit) {
+    add(CheckNameValidationEvent(name: event.personalInformation.name ?? ""));
+    add(CheckGovernorateValidationEvent(
+        governorate: event.personalInformation.governorate!));
+    add(CheckMobileValidationEvent(
+        mobile: event.personalInformation.mobile ?? ""));
+    add(CheckCompanyNameValidationEvent(
+        companyName: event.personalInformation.companyName ?? ""));
+    add(CheckEmailValidationEvent(
+        email: event.personalInformation.email ?? ""));
+
+    if (personalInformationValidForm(
+        personalInformation: event.personalInformation)) {
+      add(StorePersonalInformationInDataBaseEvent(
+          personalInformation: event.personalInformation));
+    }
+  }
+
+  Future<void> _onStorePersonalInformationInDataBaseEvent(
+      StorePersonalInformationInDataBaseEvent event,
+      Emitter<PersonalInformationState> emit) async {
+    await savePersonalInformationIntoDataBaseUseCase(
+        personalInformation: event.personalInformation);
+  }
+
+  bool personalInformationValidForm(
+      {required PersonalInformation personalInformation}) {
+    if (personalInformationValidationText.name == null &&
+        personalInformationValidationText.governorate == null &&
+        personalInformationValidationText.mobile == null &&
+        personalInformationValidationText.companyName == null &&
+        personalInformationValidationText.email == null) {
+      return true;
+    }
+    return false;
   }
 }

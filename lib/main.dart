@@ -1,5 +1,7 @@
 import 'package:empowero/src/config/theme/theme_manager.dart';
+import 'package:empowero/src/data/sources/local/empoweromics/database/personal_information_database_services/models/local_drop_down_button_value.dart';
 import 'package:empowero/src/data/sources/local/empoweromics/database/personal_information_database_services/models/local_personal_information.dart';
+import 'package:empowero/src/data/sources/local/empoweromics/database/personal_information_database_services/models/local_radio_button_values.dart';
 import 'package:empowero/src/di/injector.dart';
 import 'package:empowero/src/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:empowero/src/presentation/bloc/personal_information/personal_information_bloc.dart';
@@ -17,6 +19,9 @@ Future<void> main() async {
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
   Hive.registerAdapter(LocalPersonalInformationAdapter());
+  Hive.registerAdapter(LocalDropDownButtonValueAdapter());
+  Hive.registerAdapter(LocalRadioButtonValuesAdapter());
+  await Hive.openBox<LocalPersonalInformation>('personal_information_table');
   runApp(const MyApp());
 }
 

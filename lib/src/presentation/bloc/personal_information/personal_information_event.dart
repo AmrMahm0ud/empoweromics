@@ -1,4 +1,5 @@
 import 'package:empowero/src/domain/entities/personal_information/drop_down_button_value.dart';
+import 'package:empowero/src/domain/entities/personal_information/personal_information.dart';
 import 'package:empowero/src/domain/entities/personal_information/radio_button_value.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,6 +9,17 @@ abstract class PersonalInformationEvent extends Equatable {
 }
 
 class StorePersonalInformationInDataBaseEvent extends PersonalInformationEvent {
+  final PersonalInformation personalInformation;
+
+  StorePersonalInformationInDataBaseEvent({required this.personalInformation});
+}
+
+class SendPersonalInformationButtonPressedEvent
+    extends PersonalInformationEvent {
+  final PersonalInformation personalInformation;
+
+  SendPersonalInformationButtonPressedEvent(
+      {required this.personalInformation});
 }
 
 class CheckNameValidationEvent extends PersonalInformationEvent {

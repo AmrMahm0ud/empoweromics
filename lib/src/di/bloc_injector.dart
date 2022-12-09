@@ -13,5 +13,6 @@ Future<void> initializeBlocDependencies() async {
           validateGovernorateUseCase: injector(),
           validateMobileNumberUseCase: injector(),
           validateCompanyNameUseCase: injector(),
-          validateEmailUseCase: injector()));
+          validateEmailUseCase: injector(),
+          savePersonalInformationIntoDataBaseUseCase: injector()));
 }

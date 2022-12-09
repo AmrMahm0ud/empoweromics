@@ -1,4 +1,6 @@
 import 'package:empowero/src/domain/entities/personal_information/drop_down_button_value.dart';
+import 'package:empowero/src/domain/entities/personal_information/dummy_data.dart';
+import 'package:empowero/src/domain/entities/personal_information/personal_information.dart';
 import 'package:empowero/src/domain/entities/personal_information/personal_information_validation_text.dart';
 import 'package:empowero/src/domain/entities/personal_information/radio_button_value.dart';
 import 'package:empowero/src/presentation/bloc/personal_information/personal_information_bloc.dart';
@@ -24,43 +26,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   TextEditingController companyEditingController = TextEditingController();
   TextEditingController emailEditingController = TextEditingController();
   PersonalInformationValidationText? _personalInformationValidationText;
-
-  RadioButtonValue? selectedBankingObligations =
-      const RadioButtonValue(label: "Yes", id: 0);
-  RadioButtonValue? selectedEmployType;
-  DropDownButtonValue? selectedGovernorates =
-      const DropDownButtonValue(title: "Select Governorate", id: -1);
-  DropDownButtonValue? selectedMonthlyIncome =
-      const DropDownButtonValue(id: -1, title: "Please Choose");
-  DropDownButtonValue? selectedWhereHearAboutUs =
-      const DropDownButtonValue(id: -1, title: "Please Choose");
-
-  List<RadioButtonValue> bankingObligations = [
-    const RadioButtonValue(label: "Yes", id: 0),
-    const RadioButtonValue(label: "No", id: 1)
-  ];
-  List<RadioButtonValue> employType = [
-    const RadioButtonValue(label: "Employed", id: 0),
-    const RadioButtonValue(label: "Self-employed", id: 1)
-  ];
-
-  List<DropDownButtonValue> governorates = [
-    const DropDownButtonValue(title: "Select Governorate", id: -1),
-    const DropDownButtonValue(title: "Cairo", id: 0),
-    const DropDownButtonValue(title: "Aswan", id: 1)
-  ];
-
-  List<DropDownButtonValue> monthlyIncome = [
-    const DropDownButtonValue(title: "Please Choose", id: -1),
-    const DropDownButtonValue(title: "1000", id: 0),
-    const DropDownButtonValue(title: "2000", id: 1)
-  ];
-
-  List<DropDownButtonValue> whereDidYouHearAboutUs = [
-    const DropDownButtonValue(title: "Please Choose", id: -1),
-    const DropDownButtonValue(title: "Facebook", id: 0),
-    const DropDownButtonValue(title: "Twitter", id: 1)
-  ];
+  PersonalInformation personalInformation = PersonalInformation(
+      bankingObligations: bankingObligations.first,
+      monthlyIncome: monthlyIncome.first,
+      governorate: governorates.first,
+      whereDidYouHearAboutUs: whereDidYouHearAboutUs.first);
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +42,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           _personalInformationValidationText =
               state.personalInformationValidationText;
         } else if (state is SelectedEmployTypeState) {
-          selectedEmployType = state.employType;
+          personalInformation.employType = state.employType;
         } else if (state is SelectedBankingObligationState) {
-          selectedBankingObligations = state.bankingObligation;
+          personalInformation.bankingObligations = state.bankingObligation;
         }
       }, builder: (context, state) {
         return CustomScrollView(slivers: [
@@ -91,22 +61,23 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       SizedBox(
                         width: 250,
                         child: CustomTextFieldWidget(
-                          errorMessage:
-                              _personalInformationValidationText?.name,
-                          controller: nameEditingController,
-                          onChange: (name) =>
-                              checkNameValidationEvent(name: name),
-                        ),
+                            errorMessage:
+                                _personalInformationValidationText?.name,
+                            controller: nameEditingController,
+                            onChange: (name) {
+                              personalInformation.name = name;
+                              checkNameValidationEvent(name: name);
+                            }),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
                   CustomDropDownButton(
-                      selectedValue: selectedGovernorates!,
+                      selectedValue: personalInformation.governorate!,
                       values: governorates,
                       title: "Governorate *",
                       onChange: (governorate) {
-                        selectedGovernorates = governorate;
+                        personalInformation.governorate = governorate;
                         checkGovernorateValidationEvent(
                             governorate: governorate);
                       },
@@ -124,6 +95,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 _personalInformationValidationText?.mobile,
                             controller: mobileEditingController,
                             onChange: (value) {
+                              personalInformation.mobile = value;
                               checkMobileValidationEvent(mobile: value);
                             },
                             textInputType: TextInputType.phone),
@@ -133,18 +105,20 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   const SizedBox(height: 10),
                   RadiobuttonSelectionWidget(
                     values: employType,
-                    selectedValue: selectedEmployType,
+                    selectedValue: personalInformation.employType,
                     title: "Employed / Self employed",
                     onChanged: (value) {
+                      personalInformation.employType = value;
                       selectEmployTypeEvent(employType: value);
                     },
                   ),
                   const SizedBox(height: 10),
                   RadiobuttonSelectionWidget(
                     values: bankingObligations,
-                    selectedValue: selectedBankingObligations,
+                    selectedValue: personalInformation.bankingObligations,
                     title: "Do you have and banking obligation?*",
                     onChanged: (value) {
+                      personalInformation.bankingObligations = value;
                       selectBankingObligationsEvent(bankingObligation: value);
                     },
                   ),
@@ -160,6 +134,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 _personalInformationValidationText?.companyName,
                             controller: companyEditingController,
                             onChange: (value) {
+                              personalInformation.companyName = value;
                               checkCompanyNameValidationEvent(
                                   companyName: value);
                             }),
@@ -168,11 +143,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   ),
                   const SizedBox(height: 10),
                   CustomDropDownButton(
-                    selectedValue: selectedMonthlyIncome!,
+                    selectedValue: personalInformation.monthlyIncome!,
                     values: monthlyIncome,
                     title: "Monthly income",
-                    onChange: (monthlyIncome) {
-                      selectedMonthlyIncome = monthlyIncome;
+                    onChange: (value) {
+                      personalInformation.monthlyIncome = value;
                     },
                   ),
                   const SizedBox(height: 10),
@@ -187,6 +162,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 _personalInformationValidationText?.email,
                             controller: emailEditingController,
                             onChange: (value) {
+                              personalInformation.email = value;
                               checkEmailValidationEvent(email: value);
                             }),
                       ),
@@ -194,17 +170,21 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   ),
                   const SizedBox(height: 10),
                   CustomDropDownButton(
-                      selectedValue: selectedWhereHearAboutUs!,
+                      selectedValue:
+                          personalInformation.whereDidYouHearAboutUs!,
                       values: whereDidYouHearAboutUs,
                       title: "Where did they hear about us?",
                       onChange: (value) {
-                        selectedWhereHearAboutUs = value;
+                        personalInformation.whereDidYouHearAboutUs = value;
                       }),
                   const Spacer(),
                   ElevatedButton(
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                    onPressed: () {},
+                    onPressed: () {
+                      sendButtonPressedEvent(
+                          personalInformation: personalInformation);
+                    },
                     child: const Text(
                       "Send",
                       style: TextStyle(color: Colors.black),
@@ -254,5 +234,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   void checkEmailValidationEvent({required String email}) {
     BlocProvider.of<PersonalInformationBloc>(context)
         .add(CheckEmailValidationEvent(email: email));
+  }
+
+  void sendButtonPressedEvent(
+      {required PersonalInformation personalInformation}) {
+    BlocProvider.of<PersonalInformationBloc>(context).add(
+        SendPersonalInformationButtonPressedEvent(
+            personalInformation: personalInformation));
   }
 }

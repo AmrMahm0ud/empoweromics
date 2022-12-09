@@ -2,35 +2,35 @@ import 'package:empowero/src/domain/entities/personal_information/drop_down_butt
 import 'package:empowero/src/domain/entities/personal_information/radio_button_value.dart';
 
 class PersonalInformation {
-  final String id;
+  String? id;
 
-  final String name;
+  String? name;
 
-  final DropDownButtonValue governorate;
+  DropDownButtonValue? governorate;
 
-  final String mobile;
+  String? mobile;
 
-  final RadioButtonValue employType;
+  RadioButtonValue? employType;
 
-  final RadioButtonValue bankingObligations;
+  RadioButtonValue? bankingObligations;
 
-  final String companyName;
+  String? companyName;
 
-  final DropDownButtonValue monthlyIncome;
+  DropDownButtonValue? monthlyIncome;
 
-  final String email;
+  String? email;
 
-  final DropDownButtonValue whereDidYouHearAboutUs;
+  DropDownButtonValue? whereDidYouHearAboutUs;
 
   PersonalInformation(
-      {required this.name,
-      required this.governorate,
-      required this.mobile,
-      required this.employType,
-      required this.bankingObligations,
-      required this.companyName,
-      required this.monthlyIncome,
-      required this.email,
-      required this.whereDidYouHearAboutUs,
-      required this.id});
+      {this.name,
+      this.governorate,
+      this.mobile,
+      this.employType,
+      this.bankingObligations,
+      this.companyName,
+      this.monthlyIncome,
+      this.email,
+      this.whereDidYouHearAboutUs,
+      this.id});
 }

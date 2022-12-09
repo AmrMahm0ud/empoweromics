@@ -9,7 +9,9 @@ class PersonalInformationDatabaseServicesImplementation
     extends PersonalInformationDatabaseServices {
   @override
   Future<void> save(LocalPersonalInformation localPersonalInformation) async {
-    final personalInformationBox = await Hive.openBox('personal_information_table');
-    await personalInformationBox.put(localPersonalInformation.id, localPersonalInformation);
+    final personalInformationBox = await Hive.openBox<LocalPersonalInformation>(
+        'personal_information_table');
+    await personalInformationBox.put(
+        localPersonalInformation.id, localPersonalInformation);
   }
 }

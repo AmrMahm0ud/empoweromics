@@ -27,3 +27,10 @@ List<DropDownButtonValue> whereDidYouHearAboutUs = [
   const DropDownButtonValue(title: "Facebook", id: 0),
   const DropDownButtonValue(title: "Twitter", id: 1)
 ];
+
+List<DropDownButtonValue> unitType = [
+  const DropDownButtonValue(title: "", id: -1),
+  const DropDownButtonValue(title: "Residential", id: 0),
+  const DropDownButtonValue(title: "Non-Residential", id: 1),
+  const DropDownButtonValue(title: "Second home", id: 2)
+];

@@ -1,5 +1,5 @@
 import 'package:empowero/src/domain/entities/personal_information/drop_down_button_value.dart';
-import 'package:empowero/src/domain/entities/personal_information/dummy_data.dart';
+import 'package:empowero/src/core/utils/dummy_data.dart';
 import 'package:empowero/src/domain/entities/personal_information/personal_information.dart';
 import 'package:empowero/src/domain/entities/personal_information/personal_information_validation_text.dart';
 import 'package:empowero/src/domain/entities/personal_information/radio_button_value.dart';

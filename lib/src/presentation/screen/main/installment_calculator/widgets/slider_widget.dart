@@ -4,13 +4,15 @@ class SliderWidget extends StatefulWidget {
   final double minRange, maxRange;
   double sliderValue;
   final String title;
+  final Function(int) onChange;
 
   SliderWidget(
       {Key? key,
       required this.maxRange,
       required this.minRange,
       required this.sliderValue,
-      required this.title})
+      required this.title,
+      required this.onChange})
       : super(key: key);
 
   @override
@@ -34,6 +36,7 @@ class _SliderWidgetState extends State<SliderWidget> {
         Slider(
           value: widget.sliderValue,
           onChanged: (value) {
+            widget.onChange(value.toInt());
             setState(() => widget.sliderValue = value);
           },
           min: widget.minRange,

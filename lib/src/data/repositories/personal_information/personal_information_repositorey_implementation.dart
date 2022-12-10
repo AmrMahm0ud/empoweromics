@@ -15,7 +15,7 @@ class PersonalInformationRepositoryImplementation
   @override
   Future<bool> savePersonalInformation(
       {required PersonalInformation personalInformation}) async {
-    await personalInformationDatabaseServices.save(LocalPersonalInformation(
+   bool result =  await personalInformationDatabaseServices.save(LocalPersonalInformation(
         name: personalInformation.name!,
         governorate: LocalDropDownButtonValue(
             title: personalInformation.governorate!.title,
@@ -36,6 +36,6 @@ class PersonalInformationRepositoryImplementation
             title: personalInformation.whereDidYouHearAboutUs!.title,
             id: personalInformation.whereDidYouHearAboutUs!.id),
         id: "1"));
-    return false;
+    return result;
   }
 }

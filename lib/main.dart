@@ -6,7 +6,7 @@ import 'package:empowero/src/di/injector.dart';
 import 'package:empowero/src/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:empowero/src/presentation/bloc/installment_calculator/installment_calculator_bloc.dart';
 import 'package:empowero/src/presentation/bloc/personal_information/personal_information_bloc.dart';
-import 'package:empowero/src/presentation/screen/main/installment_calculator/installment_calculator_screen.dart';
+import 'package:empowero/src/presentation/screen/authentication/authentication_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Empoweromics',
         theme: getApplicationTheme(),
-        home: const InstallmentCalculatorScreen(),
+        home: const AuthenticationScreen(),
       ),
     );
   }

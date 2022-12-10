@@ -136,8 +136,11 @@ class PersonalInformationBloc
   Future<void> _onStorePersonalInformationInDataBaseEvent(
       StorePersonalInformationInDataBaseEvent event,
       Emitter<PersonalInformationState> emit) async {
-    await savePersonalInformationIntoDataBaseUseCase(
+    bool result = await savePersonalInformationIntoDataBaseUseCase(
         personalInformation: event.personalInformation);
+    if (result == true) {
+      emit(SuccessSavePersonalInformationIntoDataBaseState());
+    }
   }
 
   bool personalInformationValidForm(

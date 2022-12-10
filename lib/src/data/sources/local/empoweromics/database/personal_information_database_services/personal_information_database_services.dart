@@ -2,16 +2,22 @@ import 'package:empowero/src/data/sources/local/empoweromics/database/personal_i
 import 'package:hive/hive.dart';
 
 abstract class PersonalInformationDatabaseServices {
-  Future<void> save(LocalPersonalInformation localPersonalInformation);
+  Future<bool> save(LocalPersonalInformation localPersonalInformation);
 }
 
 class PersonalInformationDatabaseServicesImplementation
     extends PersonalInformationDatabaseServices {
   @override
-  Future<void> save(LocalPersonalInformation localPersonalInformation) async {
+  Future<bool> save(LocalPersonalInformation localPersonalInformation) async {
     final personalInformationBox = await Hive.openBox<LocalPersonalInformation>(
         'personal_information_table');
     await personalInformationBox.put(
         localPersonalInformation.id, localPersonalInformation);
+
+    if (personalInformationBox.getAt(0)!.email != "") {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

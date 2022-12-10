@@ -1,11 +1,12 @@
-import 'package:empowero/src/domain/entities/personal_information/drop_down_button_value.dart';
 import 'package:empowero/src/core/utils/dummy_data.dart';
+import 'package:empowero/src/domain/entities/personal_information/drop_down_button_value.dart';
 import 'package:empowero/src/domain/entities/personal_information/personal_information.dart';
 import 'package:empowero/src/domain/entities/personal_information/personal_information_validation_text.dart';
 import 'package:empowero/src/domain/entities/personal_information/radio_button_value.dart';
 import 'package:empowero/src/presentation/bloc/personal_information/personal_information_bloc.dart';
 import 'package:empowero/src/presentation/bloc/personal_information/personal_information_event.dart';
 import 'package:empowero/src/presentation/bloc/personal_information/personal_information_state.dart';
+import 'package:empowero/src/presentation/screen/main/main_screen.dart';
 import 'package:empowero/src/presentation/screen/personal_information/widgets/custom_drop_down_button.dart';
 import 'package:empowero/src/presentation/screen/personal_information/widgets/custom_text_field_widget.dart';
 import 'package:empowero/src/presentation/screen/personal_information/widgets/radio_selection_widget.dart';
@@ -45,6 +46,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           personalInformation.employType = state.employType;
         } else if (state is SelectedBankingObligationState) {
           personalInformation.bankingObligations = state.bankingObligation;
+        } else if (state is SuccessSavePersonalInformationIntoDataBaseState) {
+          navigateToMainScreen();
         }
       }, builder: (context, state) {
         return CustomScrollView(slivers: [
@@ -241,5 +244,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     BlocProvider.of<PersonalInformationBloc>(context).add(
         SendPersonalInformationButtonPressedEvent(
             personalInformation: personalInformation));
+  }
+
+  Future<void> navigateToMainScreen() async {
+    await Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const MainScreen()),
+    );
   }
 }

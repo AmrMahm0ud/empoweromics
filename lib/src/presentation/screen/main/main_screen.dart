@@ -1,4 +1,5 @@
 import 'package:empowero/src/core/resources/image_paths.dart';
+import 'package:empowero/src/presentation/screen/main/installment_calculator/installment_calculator_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -30,7 +31,10 @@ class _MainScreenState extends State<MainScreen> {
             propertyType(
                 imagePath: ImagePaths.secondHomeIcon, label: "Second Home"),
             ElevatedButton(
-                onPressed: () {}, child: const Text("Installment calculator"))
+                onPressed: () {
+                  navigateInstallmentCalculationScreen();
+                },
+                child: const Text("Installment calculator"))
           ],
         ),
       ),
@@ -59,6 +63,14 @@ class _MainScreenState extends State<MainScreen> {
           )
         ],
       ),
+    );
+  }
+
+  Future<void> navigateInstallmentCalculationScreen() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const InstallmentCalculatorScreen()),
     );
   }
 }

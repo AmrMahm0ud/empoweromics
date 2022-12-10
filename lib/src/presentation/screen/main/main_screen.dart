@@ -15,28 +15,35 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Image.asset(
-              ImagePaths.bannerImage,
-              fit: BoxFit.fill,
-              height: 200,
+      body: CustomScrollView(
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              children: [
+                Image.asset(
+                  ImagePaths.bannerImage,
+                  fit: BoxFit.fill,
+                  height: 200,
+                ),
+                propertyType(
+                    imagePath: ImagePaths.residentialIcon,
+                    label: "Residential"),
+                propertyType(
+                    imagePath: ImagePaths.nonResidentialIcon,
+                    label: "Non Residential"),
+                propertyType(
+                    imagePath: ImagePaths.secondHomeIcon, label: "Second Home"),
+                const Spacer(),
+                ElevatedButton(
+                    onPressed: () {
+                      navigateInstallmentCalculationScreen();
+                    },
+                    child: const Text("Installment calculator"))
+              ],
             ),
-            propertyType(
-                imagePath: ImagePaths.residentialIcon, label: "Residential"),
-            propertyType(
-                imagePath: ImagePaths.nonResidentialIcon,
-                label: "Non Residential"),
-            propertyType(
-                imagePath: ImagePaths.secondHomeIcon, label: "Second Home"),
-            ElevatedButton(
-                onPressed: () {
-                  navigateInstallmentCalculationScreen();
-                },
-                child: const Text("Installment calculator"))
-          ],
-        ),
+          ),
+        ],
       ),
     ));
   }

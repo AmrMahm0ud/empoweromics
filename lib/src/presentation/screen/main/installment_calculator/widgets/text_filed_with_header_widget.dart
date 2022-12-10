@@ -6,13 +6,14 @@ class TextFiledWithHeaderWidget extends StatelessWidget {
   final String? errorMessage;
   final Function(String) onChange;
   TextEditingController controller;
+  final TextInputType textInputType;
 
-  TextFiledWithHeaderWidget(
-      {Key? key,
-      required this.headerText,
-      this.errorMessage,
-      required this.onChange,
-      required this.controller})
+  TextFiledWithHeaderWidget({Key? key,
+    required this.headerText,
+    this.errorMessage,
+    required this.onChange,
+    required this.controller,
+    this.textInputType = TextInputType.text})
       : super(key: key);
 
   @override
@@ -26,6 +27,7 @@ class TextFiledWithHeaderWidget extends StatelessWidget {
           controller: controller,
           onChange: onChange,
           errorMessage: errorMessage,
+          textInputType: textInputType,
         )
       ],
     );

@@ -102,6 +102,7 @@ class _InstallmentCalculatorScreenState
                   controller: financeValueController,
                   headerText: "Finance value *",
                   errorMessage: financeValueErrorMessage,
+                  textInputType: TextInputType.number,
                 ),
                 const SizedBox(height: 10),
                 TextFiledWithHeaderWidget(

@@ -23,6 +23,8 @@ class InstallmentCalculatorBloc
 
     on<CheckInstallmentFinanceValueValidationEvent>(
         _onCheckInstallmentFinanceValueValidationEvent);
+
+    on<CalculateInstallmentEvent>(_onCalculateInstallmentEvent);
   }
 
   void _onCheckInstallmentUnitTypeValidationEvent(
@@ -49,5 +51,32 @@ class InstallmentCalculatorBloc
     emit(InstallmentCalculatorValidationState(
         financeValueErrorMessage: financeValueErrorMessage,
         unitTypeErrorMessage: unitTypeErrorMessage));
+  }
+
+  void _onCalculateInstallmentEvent(CalculateInstallmentEvent event,
+      Emitter<InstallmentCalculatorState> emit) {
+    add(CheckInstallmentUnitTypeValidationEvent(
+        unitType: event.installmentCalculation.unitType!));
+
+    add(CheckInstallmentFinanceValueValidationEvent(
+        financeValue: event.installmentCalculation.financeValue ?? ""));
+
+    if (installmentCalculateValidationForm()) {
+      double answer = calculateInstallmentUseCase(
+          installmentCalculation: event.installmentCalculation);
+      emit(InstallmentCalculationAnswerState(
+          installmentCalculationAnswer: answer.toString()));
+    } else {
+      emit(InstallmentCalculatorValidationState(
+          financeValueErrorMessage: financeValueErrorMessage,
+          unitTypeErrorMessage: unitTypeErrorMessage));
+    }
+  }
+
+  bool installmentCalculateValidationForm() {
+    if (financeValueErrorMessage == null && unitTypeErrorMessage == null) {
+      return true;
+    }
+    return false;
   }
 }

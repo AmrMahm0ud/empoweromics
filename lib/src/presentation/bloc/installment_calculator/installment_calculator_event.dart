@@ -1,3 +1,4 @@
+import 'package:empowero/src/domain/entities/installment_calculation/installment_calculation.dart';
 import 'package:empowero/src/domain/entities/personal_information/drop_down_button_value.dart';
 import 'package:equatable/equatable.dart';
 
@@ -18,4 +19,10 @@ class CheckInstallmentFinanceValueValidationEvent
   final String financeValue;
 
   CheckInstallmentFinanceValueValidationEvent({required this.financeValue});
+}
+
+class CalculateInstallmentEvent extends InstallmentCalculatorEvent {
+  final InstallmentCalculation installmentCalculation;
+
+  CalculateInstallmentEvent({required this.installmentCalculation});
 }

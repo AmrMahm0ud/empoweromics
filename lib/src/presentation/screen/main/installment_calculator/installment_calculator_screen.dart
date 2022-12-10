@@ -26,7 +26,7 @@ class _InstallmentCalculatorScreenState
 
   InstallmentCalculation installmentCalculation =
       InstallmentCalculation(unitType: unitType.first, age: 21, toner: 1);
-  String? unitTypeErrorMessage, financeValueErrorMessage;
+  String? unitTypeErrorMessage, financeValueErrorMessage, installmentAnswer;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +38,8 @@ class _InstallmentCalculatorScreenState
             if (state is InstallmentCalculatorValidationState) {
               unitTypeErrorMessage = state.unitTypeErrorMessage;
               financeValueErrorMessage = state.financeValueErrorMessage;
+            } else if (state is InstallmentCalculationAnswerState) {
+              installmentAnswer = state.installmentCalculationAnswer;
             }
           },
           builder: (context, state) {
@@ -68,6 +70,7 @@ class _InstallmentCalculatorScreenState
                     title: "Unit type (type of product)",
                     values: unitType,
                     onChange: (value) {
+                      installmentCalculation.unitType = value;
                       checkUnitTypeValidationEvent(unitType: value);
                     },
                     selectedValue: installmentCalculation.unitType!,
@@ -77,22 +80,23 @@ class _InstallmentCalculatorScreenState
                     title: "age *",
                     maxRange: 65,
                     minRange: 21,
-                    sliderValue: 21,
+                    sliderValue: installmentCalculation.age! .toDouble(),
                     onChange: (value) {
                       installmentCalculation.age = value;
                     }),
                 const SizedBox(height: 10),
                 SliderWidget(
                     title: "Tenor in year *",
-                    maxRange: 100,
+                    maxRange: 15,
                     minRange: 1,
-                    sliderValue: 1,
+                    sliderValue: installmentCalculation.toner!.toDouble(),
                     onChange: (value) {
                       installmentCalculation.toner = value;
                     }),
                 const SizedBox(height: 10),
                 TextFiledWithHeaderWidget(
                   onChange: (value) {
+                    installmentCalculation.financeValue = value;
                     checkFinanceValueValidationEvent(financeValue: value);
                   },
                   controller: financeValueController,
@@ -101,16 +105,24 @@ class _InstallmentCalculatorScreenState
                 ),
                 const SizedBox(height: 10),
                 TextFiledWithHeaderWidget(
-                    onChange: (value) {},
+                    onChange: (value) {
+                      installmentCalculation.unitValue = value;
+                    },
                     controller: unitValueController,
                     headerText: "Unit value"),
                 const SizedBox(height: 10),
+                installmentAnswer == null
+                    ? const SizedBox()
+                    : installmentCalculateAnswerQuestion(),
                 const Spacer(),
                 Center(
                   child: ElevatedButton(
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                    onPressed: () {},
+                    onPressed: () {
+                      calculateInstallmentEvent(
+                          installmentCalculation: installmentCalculation);
+                    },
                     child: const Text(
                       "Calculate",
                       style: TextStyle(color: Colors.white),
@@ -125,6 +137,14 @@ class _InstallmentCalculatorScreenState
     );
   }
 
+  Widget installmentCalculateAnswerQuestion() {
+    return SizedBox(
+        child: Text(
+      installmentAnswer ?? "",
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ));
+  }
+
   void checkUnitTypeValidationEvent({required DropDownButtonValue unitType}) {
     BlocProvider.of<InstallmentCalculatorBloc>(context)
         .add(CheckInstallmentUnitTypeValidationEvent(unitType: unitType));
@@ -136,5 +156,10 @@ class _InstallmentCalculatorScreenState
             financeValue: financeValue));
   }
 
-  void calculateInstallmentEvent() {}
+  void calculateInstallmentEvent(
+      {required InstallmentCalculation installmentCalculation}) {
+    BlocProvider.of<InstallmentCalculatorBloc>(context).add(
+        CalculateInstallmentEvent(
+            installmentCalculation: installmentCalculation));
+  }
 }

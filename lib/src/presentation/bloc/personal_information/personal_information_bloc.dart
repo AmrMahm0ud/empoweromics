@@ -1,4 +1,3 @@
-import 'package:empowero/src/domain/entities/personal_information/personal_information.dart';
 import 'package:empowero/src/domain/entities/personal_information/personal_information_validation_text.dart';
 import 'package:empowero/src/domain/usecase/personal_information/save_personal_information_into_local_database_use_case.dart';
 import 'package:empowero/src/domain/usecase/personal_information/validate_company_name_use_case.dart';
@@ -126,8 +125,9 @@ class PersonalInformationBloc
     add(CheckEmailValidationEvent(
         email: event.personalInformation.email ?? ""));
 
-    if (personalInformationValidForm(
-        personalInformation: event.personalInformation)) {
+    bool validationFrom = personalInformationValidForm();
+
+    if (validationFrom == true) {
       add(StorePersonalInformationInDataBaseEvent(
           personalInformation: event.personalInformation));
     }
@@ -143,8 +143,7 @@ class PersonalInformationBloc
     }
   }
 
-  bool personalInformationValidForm(
-      {required PersonalInformation personalInformation}) {
+  bool personalInformationValidForm() {
     if (personalInformationValidationText.name == null &&
         personalInformationValidationText.governorate == null &&
         personalInformationValidationText.mobile == null &&

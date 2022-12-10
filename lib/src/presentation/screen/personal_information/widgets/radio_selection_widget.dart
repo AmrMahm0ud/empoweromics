@@ -21,28 +21,24 @@ class RadiobuttonSelectionWidget extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 150,
-          child: Text(title),
-        ),
-        _buildRadioSelectionWidget(context),
+        Expanded(child: Text(title)),
+        Expanded(child:
+        _buildRadioSelectionWidget(context)),
       ],
     );
   }
 
   Widget _buildRadioSelectionWidget(context) {
-    return Expanded(
-      child: Row(
-          children: values
-              .map((element) => CustomRadioButton(
-                    radioButtonValue: element,
-                    title: element.label,
-                    selectedValue: selectedValue,
-                    onChange: (value) {
-                      onChanged(value);
-                    },
-                  ))
-              .toList()),
-    );
+    return Column(
+        children: values
+            .map((element) => CustomRadioButton(
+                  radioButtonValue: element,
+                  title: element.label,
+                  selectedValue: selectedValue,
+                  onChange: (value) {
+                    onChanged(value);
+                  },
+                ))
+            .toList());
   }
 }

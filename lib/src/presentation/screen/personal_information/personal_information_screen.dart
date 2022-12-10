@@ -37,6 +37,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      appBar: AppBar(
+        title: const Text("Apply now "),
+      ),
       body: BlocConsumer<PersonalInformationBloc, PersonalInformationState>(
           listener: (context, state) {
         if (state is PersonalInformationValidationState) {
@@ -54,15 +57,20 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           SliverFillRemaining(
             hasScrollBody: false,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(
+                  top: 12.0, left: 12.0, right: 12.0, bottom: 12.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Text(
+                      "ADIB is here to serve you 24 hours a day. please select the way you want us to assist you and our personnel will be glad to help you out with any queries/questions.",
+                      style: TextStyle(wordSpacing: 2)),
+                  const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Name *"),
-                      SizedBox(
-                        width: 250,
+                      const Expanded(child: Text("Name *")),
+                      Expanded(
                         child: CustomTextFieldWidget(
                             errorMessage:
                                 _personalInformationValidationText?.name,
@@ -90,9 +98,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Mobile *"),
-                      SizedBox(
-                        width: 250,
+                      const Expanded(child: Text("Mobile *")),
+                      Expanded(
                         child: CustomTextFieldWidget(
                             errorMessage:
                                 _personalInformationValidationText?.mobile,
@@ -129,9 +136,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Company name *"),
-                      SizedBox(
-                        width: 250,
+                      const Expanded(child: Text("Company name *")),
+                      Expanded(
                         child: CustomTextFieldWidget(
                             errorMessage:
                                 _personalInformationValidationText?.companyName,
@@ -157,9 +163,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Email *"),
-                      SizedBox(
-                        width: 250,
+                      const Expanded(child: Text("Email *")),
+                      Expanded(
                         child: CustomTextFieldWidget(
                             errorMessage:
                                 _personalInformationValidationText?.email,
@@ -180,17 +185,22 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       onChange: (value) {
                         personalInformation.whereDidYouHearAboutUs = value;
                       }),
+                  const SizedBox(height: 10),
                   const Spacer(),
-                  ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                    onPressed: () {
-                      sendButtonPressedEvent(
-                          personalInformation: personalInformation);
-                    },
-                    child: const Text(
-                      "Send",
-                      style: TextStyle(color: Colors.black),
+                  Text("(*) These fields are mandatory to be filled"),
+                  const SizedBox(height: 10,),
+                  Center(
+                    child: ElevatedButton(
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                      onPressed: () {
+                        sendButtonPressedEvent(
+                            personalInformation: personalInformation);
+                      },
+                      child: const Text(
+                        "Send",
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ),
                   )
                 ],

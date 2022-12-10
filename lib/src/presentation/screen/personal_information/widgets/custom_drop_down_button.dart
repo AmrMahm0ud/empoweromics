@@ -21,9 +21,10 @@ class CustomDropDownButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          width: 150,
-          child: Text(title),
+        Expanded(
+          child: SizedBox(
+            child: Text(title),
+          ),
         ),
         Expanded(
           child: DropdownButtonFormField(

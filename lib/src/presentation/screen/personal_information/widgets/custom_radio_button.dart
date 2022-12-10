@@ -17,22 +17,20 @@ class CustomRadioButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: RadioListTile<RadioButtonValue>(
-        contentPadding: EdgeInsets.zero,
-        activeColor: Colors.blue,
-        title: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.black,
-          ),
+    return RadioListTile<RadioButtonValue>(
+      contentPadding: EdgeInsets.zero,
+      activeColor: Colors.blue,
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.black,
         ),
-        value: radioButtonValue!,
-        groupValue: selectedValue,
-        onChanged: (value) {
-          onChange(value!);
-        },
       ),
+      value: radioButtonValue!,
+      groupValue: selectedValue,
+      onChanged: (value) {
+        onChange(value!);
+      },
     );
   }
 }

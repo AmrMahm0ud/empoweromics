@@ -4,8 +4,8 @@ class PersonalInformationValidationText {
   PersonalInformationValidationText(
       {this.name,
       this.mobile,
-      this.email,
-      this.companyName,
-      this.governorate,
+      this.email ,
+      this.companyName ,
+      this.governorate ,
       this.bankingObligation});
 }

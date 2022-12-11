@@ -22,8 +22,8 @@ class PersonalInformationRepositoryImplementation
             id: personalInformation.governorate!.id),
         mobile: personalInformation.mobile!,
         employType: LocalRadioButtonValues(
-            label: personalInformation.employType!.label,
-            id: personalInformation.employType!.id),
+            label: personalInformation.employType?.label ?? "",
+            id: personalInformation.employType?.id ?? -1),
         bankingObligations: LocalRadioButtonValues(
             label: personalInformation.bankingObligations!.label,
             id: personalInformation.bankingObligations!.id),

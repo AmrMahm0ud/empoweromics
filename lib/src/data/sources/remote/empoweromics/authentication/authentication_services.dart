@@ -13,8 +13,7 @@ class AuthenticationServicesImplementation extends AuthenticationServices {
   @override
   Future<RemoteUser> authenticateWithFacebook() async {
     // Trigger the sign-in flow
-    final LoginResult loginResult =
-        await FacebookAuth.instance.login();
+    final LoginResult loginResult = await FacebookAuth.instance.login();
 
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
@@ -41,11 +40,12 @@ class AuthenticationServicesImplementation extends AuthenticationServices {
     final GoogleSignInAuthentication googleAuth =
         await googleUser!.authentication;
 
-    // // Create a new credential
-    // final credential = GoogleAuthProvider.credential(
-    //   accessToken: googleAuth.accessToken,
-    //   idToken: googleAuth.idToken,
-    // );
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    await FirebaseAuth.instance.signInWithCredential(credential);
 
     RemoteUser remoteUser =
         RemoteUser(email: googleUser.email, userId: googleUser.id);
